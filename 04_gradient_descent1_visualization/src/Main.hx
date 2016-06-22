@@ -23,7 +23,7 @@ class Main {
 		
 		var theta_0 = 0.0;
 		var theta_1 = 0.0;
-		var alpha = 0.0000001; // learn factor
+		var alpha = 0.000003; // learn factor
 		var maxSteps = 200;
 		var precision = 0.001;
 
@@ -53,15 +53,16 @@ class Main {
 			yMax = Math.max( yMax, data.y );
 		}
 		
-		trace( "xMin, yMin, xMax, yMax " + xMin, yMin, xMax, yMax );
+		//trace( "xMin, yMin, xMax, yMax " + xMin, yMin, xMax, yMax );
 		
-		var lineY1 = gradientDescent.final_theta_0 + yMin * gradientDescent.final_theta_1;
-		var lineY2 = gradientDescent.final_theta_0 + yMax * gradientDescent.final_theta_1;
+		var final_theta = gradientDescent.stepThetas[gradientDescent.stepThetas.length - 1];
+		var lineY1 = getLineY( final_theta.theta_0, final_theta.theta_1, xMin );
+		var lineY2 = getLineY( final_theta.theta_0, final_theta.theta_1, xMax );
 		
 		var lineX = [ xMin, xMax ];
 		var lineY = [ lineY1, lineY2 ];
 		
-		trace( "xMin, lineY1, xMax, lineY2 " + xMin, lineY1, xMax, lineY2 );
+		//trace( "xMin, lineY1, xMax, lineY2 " + xMin, lineY1, xMax, lineY2 );
 		
 		Pyplot.figure(1);
 		Pyplot.subplot.call(211);
@@ -78,6 +79,10 @@ class Main {
 		Pyplot.show();
 	}
 
+	function getLineY( theta_0:Float, theta_1:Float , x:Float ):Float {
+		return theta_0 + x * theta_1;
+	}
+	
 	function create_dataset_1():Array<Data> {
 		
 		var dataset = new Array<Data>();
@@ -91,43 +96,43 @@ class Main {
 	function create_dataset_2():Array<Data> {
 		
 		var dataset = new Array<Data>();
-		dataset.push( new Data( 900, 190 ));
-		dataset.push( new Data( 1000, 180 ));
-		dataset.push( new Data( 1050, 250 ));
-		dataset.push( new Data( 1060, 300 ));
-		dataset.push( new Data( 1060, 245 ));
-		dataset.push( new Data( 1100, 200 ));
-		dataset.push( new Data( 1100, 230 ));
-		dataset.push( new Data( 1100, 260 ));
-		dataset.push( new Data( 1150, 300 ));
-		dataset.push( new Data( 1200, 210 ));
-		dataset.push( new Data( 1250, 210 ));
-		dataset.push( new Data( 1250, 200 ));
-		dataset.push( new Data( 1250, 250 ));
-		dataset.push( new Data( 1300, 200 ));
-		dataset.push( new Data( 1320, 240 ));
-		dataset.push( new Data( 1450, 250 ));
-		dataset.push( new Data( 1450, 250 ));
-		dataset.push( new Data( 1500, 460 ));
-		dataset.push( new Data( 1680, 230 ));
-		dataset.push( new Data( 1880, 230 ));
-		dataset.push( new Data( 1950, 260 ));
-		dataset.push( new Data( 2000, 280 ));
-		dataset.push( new Data( 2000, 360 ));
-		dataset.push( new Data( 2010, 300 ));
-		dataset.push( new Data( 2060, 400 ));
-		dataset.push( new Data( 2060, 400 ));
-		dataset.push( new Data( 2080, 350 ));
-		dataset.push( new Data( 2100, 390 ));
-		dataset.push( new Data( 2200, 460 ));
-		dataset.push( new Data( 2200, 460 ));
-		dataset.push( new Data( 2300, 330 ));
-		dataset.push( new Data( 2350, 450 ));
-		dataset.push( new Data( 2400, 380 ));
-		dataset.push( new Data( 2550, 455 ));
-		dataset.push( new Data( 2600, 310 ));
-		dataset.push( new Data( 2700, 500 ));
-		dataset.push( new Data( 2750, 300 ));
+		dataset.push( new Data( 90, 190 ));
+		dataset.push( new Data( 100, 180 ));
+		dataset.push( new Data( 105, 250 ));
+		dataset.push( new Data( 106, 300 ));
+		dataset.push( new Data( 106, 245 ));
+		dataset.push( new Data( 110, 200 ));
+		dataset.push( new Data( 110, 230 ));
+		dataset.push( new Data( 110, 260 ));
+		dataset.push( new Data( 115, 300 ));
+		dataset.push( new Data( 120, 210 ));
+		dataset.push( new Data( 125, 210 ));
+		dataset.push( new Data( 125, 200 ));
+		dataset.push( new Data( 125, 250 ));
+		dataset.push( new Data( 130, 200 ));
+		dataset.push( new Data( 132, 240 ));
+		dataset.push( new Data( 145, 250 ));
+		dataset.push( new Data( 145, 250 ));
+		dataset.push( new Data( 150, 360 ));
+		dataset.push( new Data( 168, 230 ));
+		dataset.push( new Data( 188, 230 ));
+		dataset.push( new Data( 195, 260 ));
+		dataset.push( new Data( 200, 280 ));
+		dataset.push( new Data( 200, 360 ));
+		dataset.push( new Data( 201, 300 ));
+		dataset.push( new Data( 206, 400 ));
+		dataset.push( new Data( 206, 400 ));
+		dataset.push( new Data( 208, 350 ));
+		dataset.push( new Data( 210, 390 ));
+		dataset.push( new Data( 220, 460 ));
+		dataset.push( new Data( 220, 460 ));
+		dataset.push( new Data( 230, 330 ));
+		dataset.push( new Data( 235, 450 ));
+		dataset.push( new Data( 240, 380 ));
+		dataset.push( new Data( 255, 455 ));
+		dataset.push( new Data( 260, 310 ));
+		dataset.push( new Data( 270, 500 ));
+		dataset.push( new Data( 275, 300 ));
 		
 		return dataset;
 	}

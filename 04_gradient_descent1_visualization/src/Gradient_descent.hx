@@ -14,8 +14,7 @@ class Gradient_descent {
 	var theta_0:Float;
 
 	public var stepValues:Array<Float>;
-	public var final_theta_0:Float;
-	public var final_theta_1:Float;
+	public var stepThetas:Array<Theta>;
 	
 	public function new( dataset:Array<Data>, theta_0:Float, theta_1:Float, alpha:Float, max_steps:Int, precision:Float ) {
 		
@@ -30,6 +29,7 @@ class Gradient_descent {
 	public function calculate():Void {
 		
 		stepValues = new Array<Float>();
+		stepThetas = new Array<Theta>();
 		
 		var delta_j_theta_0_1 = Math.POSITIVE_INFINITY;
 		var j_theta_0_1 = Cost_function.calculate( dataset, theta_0, theta_1 );
@@ -53,13 +53,12 @@ class Gradient_descent {
 			
 			trace( "delta_j_theta_0_1 " + delta_j_theta_0_1 );
 			stepValues.push( -j_theta_0_1 );
+			stepThetas.push( new Theta( theta_0, theta_1 ));
 			
 		}
 		
 		trace( "j_theta_0_1 " + j_theta_0_1 );
 		
-		final_theta_0 = theta_0;
-		final_theta_1 = theta_1;
 	}
 	
 	function derivative_0( dataset:Array<Data>, theta_0:Float, theta_1:Float, alpha:Float ):Float {
