@@ -5,10 +5,31 @@ package;
  * @author Urs Stutz
  */
 class Gradient_descent {
+	
+	var dataset:Array<Data>;
+	var precision:Float;
+	var max_steps:Int;
+	var alpha:Float;
+	var theta_1:Float;
+	var theta_0:Float;
 
-	public static function calculate( dataset:Array<Data>, theta_0:Float, theta_1:Float, alpha:Float, max_steps:Int, precision:Float ):Array<Float> {
+	public var stepValues:Array<Float>;
+	public var final_theta_0:Float;
+	public var final_theta_1:Float;
+	
+	public function new( dataset:Array<Data>, theta_0:Float, theta_1:Float, alpha:Float, max_steps:Int, precision:Float ) {
 		
-		var stepValues = new Array<Float>();
+		this.dataset = dataset;
+		this.theta_0 = theta_0;
+		this.theta_1 = theta_1;
+		this.alpha = alpha;
+		this.max_steps = max_steps;
+		this.precision = precision;
+	}
+	
+	public function calculate():Void {
+		
+		stepValues = new Array<Float>();
 		
 		var delta_j_theta_0_1 = Math.POSITIVE_INFINITY;
 		var j_theta_0_1 = Cost_function.calculate( dataset, theta_0, theta_1 );
@@ -37,18 +58,19 @@ class Gradient_descent {
 		
 		trace( "j_theta_0_1 " + j_theta_0_1 );
 		
-		return stepValues;
+		final_theta_0 = theta_0;
+		final_theta_1 = theta_1;
 	}
 	
-	static function derivative_0( dataset:Array<Data>, theta_0:Float, theta_1:Float, alpha:Float ):Float {
+	function derivative_0( dataset:Array<Data>, theta_0:Float, theta_1:Float, alpha:Float ):Float {
 		return alpha * ( 1 / dataset.length ) * sum_theta_0( dataset, theta_0, theta_1 );
 	}
 	
-	static function derivative_1( dataset:Array<Data>, theta_0:Float, theta_1:Float, alpha:Float ):Float {
+	function derivative_1( dataset:Array<Data>, theta_0:Float, theta_1:Float, alpha:Float ):Float {
 		return  alpha * ( 1 / dataset.length ) * sum_theta_1( dataset, theta_0, theta_1 );
 	}
 	
-	static function sum_theta_0( dataset:Array<Data>, theta_0:Float, theta_1:Float ):Float {
+	function sum_theta_0( dataset:Array<Data>, theta_0:Float, theta_1:Float ):Float {
 		
 		var sum = 0.0;
 		for ( data in dataset ) {
@@ -61,7 +83,7 @@ class Gradient_descent {
 		return sum;
 	}
 	
-	static function sum_theta_1( dataset:Array<Data>, theta_0:Float, theta_1:Float ):Float {
+	function sum_theta_1( dataset:Array<Data>, theta_0:Float, theta_1:Float ):Float {
 		
 		var sum = 0.0;
 		for ( data in dataset ) {

@@ -17,6 +17,8 @@ class Main {
 	
 	public function new() {
 		
+		Seaborn.set_style( "darkgrid" );
+		
 		var dataset = create_dataset_2();
 		
 		var theta_0 = 0.0;
@@ -27,12 +29,52 @@ class Main {
 
 		trace( "theta_0 " + theta_0 + "  theta_1 " + theta_1 );
 		
-		var theta_0_1_min = Gradient_descent.calculate( dataset, theta_0, theta_1, alpha, maxSteps, precision );
+		var gradientDescent = new Gradient_descent( dataset, theta_0, theta_1, alpha, maxSteps, precision );
+		gradientDescent.calculate();
 		
-		Seaborn.set_style( "darkgrid" );
-		Pyplot.plot.call( theta_0_1_min ); 
+		var datasetX = new Array<Float>();
+		var datasetY = new Array<Float>();
+		
+		var xMin = Math.POSITIVE_INFINITY;
+		var yMin = Math.POSITIVE_INFINITY;
+		
+		var xMax = Math.NEGATIVE_INFINITY;
+		var yMax = Math.NEGATIVE_INFINITY;
+		
+		for ( data in dataset ) {
+			
+			datasetX.push( data.x );
+			datasetY.push( data.y );
+			
+			xMin = Math.min( xMin, data.x );
+			yMin = Math.min( yMin, data.y );
+			
+			xMax = Math.max( xMax, data.x );
+			yMax = Math.max( yMax, data.y );
+		}
+		
+		trace( "xMin, yMin, xMax, yMax " + xMin, yMin, xMax, yMax );
+		
+		var lineY1 = gradientDescent.final_theta_0 + yMin * gradientDescent.final_theta_1;
+		var lineY2 = gradientDescent.final_theta_0 + yMax * gradientDescent.final_theta_1;
+		
+		var lineX = [ xMin, xMax ];
+		var lineY = [ lineY1, lineY2 ];
+		
+		trace( "xMin, lineY1, xMax, lineY2 " + xMin, lineY1, xMax, lineY2 );
+		
+		Pyplot.figure(1);
+		Pyplot.subplot.call(211);
+		Pyplot.plot.call( datasetX, datasetY, "r." ); 
+		Pyplot.plot.call( lineX, lineY ); 
+		Pyplot.ylabel('price in 1000s');
+		Pyplot.xlabel('size (qm)');
+		
+		Pyplot.subplot.call(212);
+		Pyplot.plot.call( gradientDescent.stepValues ); 
 		Pyplot.ylabel('theta_0_1');
 		Pyplot.xlabel('steps');
+		
 		Pyplot.show();
 	}
 
