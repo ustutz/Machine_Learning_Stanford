@@ -1,2 +1,2 @@
-/cost_function1/bin/*.py
+*.py
 /pyextern
