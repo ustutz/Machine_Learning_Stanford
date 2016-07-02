@@ -30,6 +30,9 @@ class Main {
 		var m = untyped len( y ); // number of trainig examples
 		
 		//plotData( X, y );
+		Pyplot.plot.call( X, y, 'r.' );
+		Pyplot.ylabel( 'Profit in $10,000s' );
+		Pyplot.xlabel( 'Population of City in 10,000s' );
 		
 		trace( 'Running Gradient Descent ...' );
 		
@@ -54,11 +57,8 @@ class Main {
 		trace( theta );
 		
 		// Plot the linear fit
-		
-		//var secondColumn = Syntax.pythonCode( 'X[:, 1]' );
-		
-		//Pyplot.plot.call( secondColumn, untyped X * theta, '-' );
-		//Pyplot.legend.call( 'Training data', 'Linear regression' );
+		var secondColumn = Syntax.pythonCode( 'X[:, 1]' );
+		Pyplot.plot.call( secondColumn, untyped X * theta, '-' );
 		
 		// Predict values for population sizes of 35,000 and 70,000
 		var thetaPredict1 = Numpy.asmatrix( '1, 3.5' );
@@ -70,14 +70,12 @@ class Main {
 		var predict2 = untyped thetaPredict2 * theta * 10000;
 		trace( 'For population = 70,000, we predict a profit of' );
 		trace( predict2 );
+		
+		Pyplot.show();
 	}
 	
 	function plotData( x, y ):Void {
 		
-		Pyplot.plot.call( x, y, 'r.' );
-		Pyplot.ylabel( 'Profit in $10,000s' );
-		Pyplot.xlabel( 'Population of City in 10,000s' );
-		Pyplot.show();
 	}
 	
 	function computeCost( X, y, theta, m:Int ):Float {
