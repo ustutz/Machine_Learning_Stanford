@@ -27,7 +27,7 @@ class Main {
 		
 		var X = Numpy.asmatrix( Syntax.pythonCode( "data[:,0]" )).transpose();
 		var y = Numpy.asmatrix( Syntax.pythonCode( "data[:,1]" )).transpose();
-		var m = untyped len( y ); // number of trainig examples
+		var m = untyped len( y ); // number of training examples
 		
 		//plotData( X, y );
 		Pyplot.plot.call( X, y, 'r.' );
