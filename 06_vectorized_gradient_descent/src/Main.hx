@@ -74,10 +74,6 @@ class Main {
 		Pyplot.show();
 	}
 	
-	function plotData( x, y ):Void {
-		
-	}
-	
 	function computeCost( X, y, theta, m:Int ):Float {
 		return 1 / ( 2 * m ) * untyped Numpy.sum( Numpy.power(( X * theta ) - y, 2 ));
 	}
